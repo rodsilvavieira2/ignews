@@ -23,7 +23,6 @@ export async function saveSubscription(
     price_id: subscription.items.data[0].price.id,
   };
 
-  console.log(createdAction)
 
   if (createdAction) {
     await fauna.query(

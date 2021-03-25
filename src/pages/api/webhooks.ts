@@ -46,7 +46,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     const { type } = event;
     
     if (relevantEvents.has(type)) {
-      console.log("type:", type);
+      
       try {
         switch (type) {
           case "customer.subscription.deleted":
