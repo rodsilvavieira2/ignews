@@ -1,7 +1,7 @@
 import NextAuth from "next-auth";
 import Providers from "next-auth/providers";
 import { fauna } from "../../../services/faunadb";
-import { query as q, query } from "faunadb";
+import { query as q } from "faunadb";
 
 interface FaunadbSubscriptionColletion {
   data: {
@@ -19,9 +19,6 @@ export default NextAuth({
     }),
     // ...add more providers here
   ],
-  jwt: {
-    signingKey: process.env.JWT_SIGING_PRIVATE_KEY,
-  },
   callbacks: {
     async session(session) {
       try {
@@ -58,6 +55,7 @@ export default NextAuth({
 
     async signIn(user) {
       const { email } = user;
+
       try {
         await fauna.query(
           q.If(
@@ -69,7 +67,9 @@ export default NextAuth({
           )
         );
         return true;
-      } catch {
+      } catch (e) {
+        console.error(e)
+        console.log("fauna error")
         return false;
       }
     },
